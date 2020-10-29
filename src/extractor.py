@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 import sys
 import urllib.request
@@ -6,8 +8,9 @@ from pprint import pprint
 import requests
 from bs4 import BeautifulSoup
 
-
-#-------------- Inicialización de variables y métodos auxiliares ----------------
+#******************************************************************
+#------- Inicialización de variables y métodos auxiliares ---------
+#******************************************************************
 
 URL_CLASIFICACION = 'https://www.eduardolosilla.es/quiniela/ayudas/clasificacion'
 
@@ -30,7 +33,7 @@ def normalize(s):
         ("í", "i"),
         ("ó", "o"),
         ("ú", "u"),
-        ("ç", "celon"), #Esta regla de reemplazo esta hecha únicamente para el F.C Barcelona
+        ("ç", "celon"), #Esta regla de reemplazo esta hecha  únicamente para el F.C Barcelona
         ("Á", "A"),
         ("É", "E"),
         ("Í", "I"),
@@ -42,7 +45,9 @@ def normalize(s):
         s = s.replace(a, b).replace(a.upper(), b.upper())
     return s
 
-#-------------- Métodos utilizables de la clase -------------------
+#*****************************************************
+#--------- Métodos utilizables de la clase -----------
+#*****************************************************
 
 def get_clasificacion():
     # La clasificacion la representamos como diccionario
