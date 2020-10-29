@@ -6,6 +6,9 @@ from pprint import pprint
 import requests
 from bs4 import BeautifulSoup
 
+
+#-------------- Inicialización de variables y métodos auxiliares ----------------
+
 URL_CLASIFICACION = 'https://www.eduardolosilla.es/quiniela/ayudas/clasificacion'
 
 URL_RACHAS = 'https://www.eduardolosilla.es/quiniela/ayudas/rachas'
@@ -19,6 +22,28 @@ TIPOS_RACHAS = [['ganando', 'empatando', 'perdiendo'],
 NUM = re.compile(r'\d+')
 NOMBRE = re.compile(r'[\w\.]+[\w\. ]*')
 
+#Función para reemplazar tildes
+def normalize(s):
+    replacements = (
+        ("á", "a"),
+        ("é", "e"),
+        ("í", "i"),
+        ("ó", "o"),
+        ("ú", "u"),
+        ("ç", "celon"), #Esta regla de reemplazo esta hecha únicamente para el F.C Barcelona
+        ("Á", "A"),
+        ("É", "E"),
+        ("Í", "I"),
+        ("Ó", "O"),
+        ("Ú", "U"),
+        ("Ç", "CELON")
+    )
+    for a, b in replacements:
+        s = s.replace(a, b).replace(a.upper(), b.upper())
+    return s
+
+#-------------- Métodos utilizables de la clase -------------------
+
 def get_clasificacion():
     # La clasificacion la representamos como diccionario
     clasificacion = {}
@@ -31,7 +56,7 @@ def get_clasificacion():
             # Recogemos de cada fila todas las columnas
             columnas = fila.find_all('td')
             posicion = int(NUM.match(columnas[0].text).group(0))
-            equipo = NOMBRE.search(columnas[1].text).group(0).upper()
+            equipo = normalize(NOMBRE.search(columnas[1].text).group(0)).upper()
             puntos = int(NUM.match(columnas[2].text).group(0))
             ganados = int(NUM.match(columnas[4].text).group(0))
             empatados = int(NUM.match(columnas[5].text).group(0))
@@ -67,7 +92,7 @@ def get_presupuestos():
             if fila.name is not None:
                 columnas = fila.find_all('td')
                 if columnas[0].text == 'Nombre':
-                    equipo = columnas[1].getText().upper()
+                    equipo = normalize(columnas[1].getText()).upper()
                 if columnas[0].text == 'Presupuesto anual':
                     presupuesto = int(columnas[1].getText())
                     presupuestos[equipo] = presupuesto
@@ -98,7 +123,7 @@ def get_rachas():
                     columnas_interior = fila_interior.find_all('td')
                     if columnas_interior:
                         partidos = int(NUM.search(columnas_interior[0].text).group(0))
-                        equipo = NOMBRE.match(columnas_interior[1].text).group(0).upper()
+                        equipo = normalize(NOMBRE.match(columnas_interior[1].text).group(0)).upper()
                         rachas[TIPOS_RACHAS[i][j]][equipo]= partidos
     return rachas
 
