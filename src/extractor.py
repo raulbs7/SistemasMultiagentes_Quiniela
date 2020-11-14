@@ -140,8 +140,6 @@ def main():
     print('-------- PRESUPUESTOS -------')
     pprint(get_presupuestos())
 
-
-
 if __name__ == '__main__':
     sys.exit(main())
 
