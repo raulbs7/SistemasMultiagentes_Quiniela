@@ -8,7 +8,7 @@ from skfuzzy import control as ctrl
 # Se tiene que definir un dominio para cada uno de las etiquetas lingüísticas.
 
 Rango_Equipos = np.arange(1, 20, 1)
-Rango_Presupuestos = np.arange(1, 950, 1) # Los presupuestos estan representados en millones
+Rango_Presupuestos = np.arange(1, 950, 1)  # Los presupuestos estan representados en millones
 Rango_Rachas = np.arange(0, 38, 1)
 
 # A continuación se define manualmente el soporte de cada un de las etiquetas, en este caso trapezoidales.
@@ -255,14 +255,16 @@ quiniela_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6, ru
                                     rule51, rule52, rule53, rule54, rule55, rule56, rule57, rule58, rule59, rule60,
                                     rule61, rule62, rule63, rule64, rule65, rule66, rule67, rule68, rule69, rule70])
 
-
 quiniela = ctrl.ControlSystemSimulation(quiniela_ctrl)
+
 
 def sis_quiniela():
     return quiniela
 
+
 def consequent():
     return Result
+
 
 def main():
     # MOSTRANDO VARIABLES DIFUSAS LO CUAL SE EJECUTARA SOLO DESDE ESTE MODULO
@@ -336,19 +338,19 @@ def main():
     ax6.legend()
 
     fig0.show()
-    #fig0.savefig('clasificacion.png')
+    # fig0.savefig('clasificacion.png')
     fig1.show()
-    #fig1.savefig('presupuesto.png')
+    # fig1.savefig('presupuesto.png')
     fig2.show()
-    #fig2.savefig('racha_ganando.png')
+    # fig2.savefig('racha_ganando.png')
     fig3.show()
-    #fig3.savefig('racha_perdiendo.png')
+    # fig3.savefig('racha_perdiendo.png')
     fig4.show()
-    #fig4.savefig('racha_empatando.png')
+    # fig4.savefig('racha_empatando.png')
     fig5.show()
-    #fig5.savefig('racha_sin_ganar.png')
+    # fig5.savefig('racha_sin_ganar.png')
     fig6.show()
-    #fig6.savefig('racha_sin_perder.png')
+    # fig6.savefig('racha_sin_perder.png')
 
     quiniela.input['Clasificacion_Local'] = 3
     quiniela.input['Clasificacion_Visitante'] = 11
@@ -374,23 +376,24 @@ def main():
     val = quiniela.output['Result']
     variable = Result['1']
 
-    Pertenencia1 = fuzz.interp_membership(range_result, variable.mf, val)
+    pertenencia_1 = fuzz.interp_membership(range_result, variable.mf, val)
 
-    print(Pertenencia1)
+    print(pertenencia_1)
 
     val = quiniela.output['Result']
     variable = Result['X']
 
-    PertenenciaX = fuzz.interp_membership(range_result, variable.mf, val)
+    pertenencia_x = fuzz.interp_membership(range_result, variable.mf, val)
 
-    print(PertenenciaX)
+    print(pertenencia_x)
 
     val = quiniela.output['Result']
     variable = Result['2']
 
-    Pertenencia2 = fuzz.interp_membership(range_result, variable.mf, val)
+    pertenencia_2 = fuzz.interp_membership(range_result, variable.mf, val)
 
-    print(Pertenencia2)
+    print(pertenencia_2)
+
 
 if __name__ == '__main__':
     sys.exit(main())

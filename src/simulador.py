@@ -2,11 +2,12 @@ import operator
 import random
 import sys
 
-from src import extractor as extr
-from src import reglas
 import numpy as np
 import skfuzzy as fuzz
-from operator import itemgetter
+
+from src import extractor as extr
+from src import reglas
+
 
 class Simulador:
 
@@ -19,7 +20,8 @@ class Simulador:
         except Exception as error:
             raise ValueError(f'Cannot init dictionary: {error}')
 
-    def simular(self, local_clasificacion, local_rachas, local_presupuestos, visitante_clasificacion, visitante_rachas, visitante_presupuestos):
+    def simular(self, local_clasificacion, local_rachas, local_presupuestos,
+                visitante_clasificacion, visitante_rachas, visitante_presupuestos):
         try:
             clasificacion_local = self.clasificacion[local_clasificacion]['posicion']
         except KeyError as error:
@@ -124,30 +126,31 @@ class Simulador:
 
         return ruleta(Pertenencia1, PertenenciaX, Pertenencia2)
 
-def ruleta(pertenencia1, pertenenciaX, pertenencia2):
 
-    pertenencias = {'pertenencia1': pertenencia1+0.1,
-                    'pertenenciaX': pertenenciaX+0.1,
-                    'pertenencia2': pertenencia2+0.1}
+def ruleta(pertenencia_1, pertenencia_x, pertenencia_2):
+    pertenencias = {'pertenencia1': pertenencia_1 + 0.1,
+                    'pertenenciaX': pertenencia_x + 0.1,
+                    'pertenencia2': pertenencia_2 + 0.1}
     pertenencias_ord = sorted(pertenencias.items(), key=operator.itemgetter(1))
 
     prob_num = random.uniform(0, 1.1)
 
-    if prob_num <= pertenencias_ord[0][1]:
+    if prob_num <= float(pertenencias_ord[0][1]):
         return pertenencias_ord[0][0]
-    if prob_num <= pertenencias_ord[1][1]:
+    if prob_num <= float(pertenencias_ord[1][1]):
         return pertenencias_ord[1][0]
-    if prob_num <= pertenencias_ord[2][1]:
+    if prob_num <= float(pertenencias_ord[2][1]):
         return pertenencias_ord[2][0]
+
 
 def main():
     sim = Simulador()
-    pertenencias1 = sim.simular('ELCHE', 'ELCHE', 'ELCHE','HUESCA','HUESCA', 'HUESCA')
+    pertenencias1 = sim.simular('ELCHE', 'ELCHE', 'ELCHE', 'HUESCA', 'HUESCA', 'HUESCA')
     print(pertenencias1)
     sim2 = Simulador()
     pertenencias2 = sim2.simular('VALENCIA', 'VALENCIA', 'VALENCIA', 'VILLARREAL', 'VILLARREAL', 'VILLARREAL')
     print(pertenencias2)
 
+
 if __name__ == '__main__':
     sys.exit(main())
-
