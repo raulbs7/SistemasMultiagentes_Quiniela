@@ -24,4 +24,4 @@ hs_err_pid*
 
 /.idea
 venv/
-src/__pycache__/
+__pycache__/
