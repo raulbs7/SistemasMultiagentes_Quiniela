@@ -25,3 +25,4 @@ hs_err_pid*
 /.idea
 venv/
 __pycache__/
+requirements.txt~
