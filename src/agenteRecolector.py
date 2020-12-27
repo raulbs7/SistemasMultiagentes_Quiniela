@@ -1,7 +1,7 @@
 import json
 import sys
 import time
-
+import uuid
 import extractor as extr
 from spade.agent import Agent
 from spade.behaviour import OneShotBehaviour
@@ -15,10 +15,7 @@ class AgenteRecolector(Agent):
             self.clasificacion = extr.get_clasificacion()
             self.rachas = extr.get_rachas()
             self.presupuestos = extr.get_presupuestos()
-            if len(sys.argv) == 2:
-                self.equipo = sys.argv[1]
-            else:
-                raise Exception("Invalid command line arguments")
+            self.equipo = sys.argv[1]
 
         async def run(self):
             try:
@@ -90,13 +87,19 @@ class AgenteRecolector(Agent):
             print("RecolectarBehaviour finished with exit code {}.".format(self.exit_code))
 
     async def setup(self):
-        print("Agente Recolector starting . . .")
+        print(f"[{self.jid}] Agente Recolector starting . . .")
         self.my_behav = self.RecolectarBehaviour()
         self.add_behaviour(self.my_behav)
 
 
 if __name__ == "__main__":
-    agente = AgenteRecolector("agente_recolector@localhost", "password")
+    if len(sys.argv) == 3:
+        nombre_agente = sys.argv[2]
+    elif len(sys.argv) == 2:
+        nombre_agente = uuid.uuid4().hex
+    else:
+        raise Exception("Invalid command line arguments")
+    agente = AgenteRecolector(f"{nombre_agente}@localhost", "password")
     agente.start()
     while True:
         try:
