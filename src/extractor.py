@@ -7,7 +7,6 @@ from pprint import pprint
 
 import requests
 from bs4 import BeautifulSoup
-from pathlib import Path
 
 # ******************************************************************
 # ------- Inicialización de variables y métodos auxiliares ---------
@@ -24,7 +23,7 @@ URL_PRESUPUESTOS_SEG = 'https://www.resultados-futbol.com/segunda/grupo1/equipos
 TIPOS_RACHAS = [['ganando', 'empatando', 'perdiendo'],
                 ['sin_ganar', 'sin_empatar', 'sin_perder']]
 
-PATH = Path().absolute().parent
+PATH = os.getcwd()
 PATH_HTML_RACHAS_SEG = os.path.join(PATH, os.path.join('res', 'rachas_segunda.html'))
 PATH_HTML_CLASIFICACION_SEG = os.path.join(PATH, os.path.join('res', 'clasificacion_segunda.html'))
 

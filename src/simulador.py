@@ -5,8 +5,8 @@ import sys
 import numpy as np
 import skfuzzy as fuzz
 
-from src import extractor as extr
-from src import reglas
+import extractor as extr
+import reglas
 
 
 class Simulador:
