@@ -1,12 +1,12 @@
-import time
-import asyncio
+import json
 import sys
+import time
+
+import extractor as extr
 from spade.agent import Agent
 from spade.behaviour import OneShotBehaviour
-import extractor as extr
-from pprint import pprint
 from spade.message import Message
-import json
+
 
 class AgenteRecolector(Agent):
     class RecolectarBehaviour(OneShotBehaviour):
@@ -19,7 +19,6 @@ class AgenteRecolector(Agent):
                 self.equipo = sys.argv[1]
             else:
                 raise Exception("Invalid command line arguments")
-
 
         async def run(self):
             try:
@@ -68,7 +67,7 @@ class AgenteRecolector(Agent):
                     rachaNP_equipo = 0
             except KeyError as error:
                 raise KeyError(f'No se pueden obtener las rachas de partidos empatados por {self.equipo}: {error}')
-            
+
             information = {
                 'clasificacion': clasificacion_equipo,
                 'presupuesto': presupuesto_equipo,
@@ -80,12 +79,12 @@ class AgenteRecolector(Agent):
                     'sin_perder': rachaNP_equipo
                 }
             }
-            msg = Message(to="agente_reglas@localhost")     # Instantiate the message
+            msg = Message(to="agente_reglas@localhost")  # Instantiate the message
             msg.set_metadata("performative", "inform")  # Set the "inform" FIPA performative
-            msg.body = json.dumps(information)             # Set the message content
+            msg.body = json.dumps(information)  # Set the message content
             msg.sender = "agente_recolector@localhost"
             await self.send(msg)
-            #await asyncio.sleep(1)
+            # await asyncio.sleep(1)
 
         async def on_end(self):
             print("RecolectarBehaviour finished with exit code {}.".format(self.exit_code))
@@ -94,6 +93,7 @@ class AgenteRecolector(Agent):
         print("Agente Recolector starting . . .")
         self.my_behav = self.RecolectarBehaviour()
         self.add_behaviour(self.my_behav)
+
 
 if __name__ == "__main__":
     agente = AgenteRecolector("agente_recolector@localhost", "password")

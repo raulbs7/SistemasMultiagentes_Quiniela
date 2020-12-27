@@ -4,12 +4,13 @@ from spade.behaviour import OneShotBehaviour
 from spade.message import Message
 from spade.template import Template
 
+
 class AgenteReglas(Agent):
     class ReglasBehaviour(OneShotBehaviour):
         async def run(self):
             print("ReglasBehaviour running")
 
-            msg = await self.receive(timeout=10) # wait for a message for 10 seconds
+            msg = await self.receive(timeout=10)  # wait for a message for 10 seconds
             if msg:
                 print("Message received with content: {}".format(msg.body))
             else:
@@ -25,11 +26,12 @@ class AgenteReglas(Agent):
         template.set_metadata("performative", "inform")
         self.add_behaviour(b, template)
 
+
 if __name__ == "__main__":
     receiveragent = AgenteReglas("agente_reglas@localhost", "receiver_password")
     future = receiveragent.start()
-    future.result() # wait for receiver agent to be prepared.
-    
+    future.result()  # wait for receiver agent to be prepared.
+
     while receiveragent.is_alive():
         try:
             time.sleep(1)
