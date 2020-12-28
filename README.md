@@ -125,7 +125,7 @@ python3 src/agenteRecolector.py cadiz agente2
 
 _Este script ejecuta los agentes automáticamente. En el podremos pasarle los argumentos anteriores:_
 
-Uso: run-agents.sh -L equipo_local -V equipo_visitante [-l id_agente_local | -v id_agente_visitante]
+**Uso:** run-agents.sh -L equipo_local -V equipo_visitante [-l id_agente_local | -v id_agente_visitante]
 
         -L Nombre del equipo local
         -V Nombre del equipo visitante
